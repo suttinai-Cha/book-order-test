@@ -19,7 +19,7 @@ You can choose postgres or mysql instead of hsql, you have to change active spri
 
 1. Init database (postgresql / mysql sql shell)
 ```
-CREATE DATABASE zeldan;
+CREATE DATABASE book_order;
 ```
 
 2. start the spring-boot app 

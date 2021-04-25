@@ -1,9 +1,9 @@
-package com.zeldan.security;
+package com.scb.security;
 
-import com.zeldan.model.Account;
-import com.zeldan.model.Privilege;
-import com.zeldan.model.Role;
-import com.zeldan.repository.AccountRepository;
+import com.scb.model.Account;
+import com.scb.model.Privilege;
+import com.scb.model.Role;
+import com.scb.repository.AccountRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

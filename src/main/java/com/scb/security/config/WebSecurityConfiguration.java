@@ -1,7 +1,7 @@
-package com.zeldan.security.config;
+package com.scb.security.config;
 
-import com.zeldan.security.AccountAuthenticationProvider;
-import com.zeldan.security.CustomUserDetailsService;
+import com.scb.security.AccountAuthenticationProvider;
+import com.scb.security.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

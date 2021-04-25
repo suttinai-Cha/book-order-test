@@ -1,6 +1,8 @@
-package com.zeldan.security.config;
+package com.scb.security.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +13,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
@@ -37,7 +40,9 @@ public class OAuth2ServerConfiguration {
         public void configure(HttpSecurity http) throws Exception {
             http
                     .csrf().disable()
-                    .authorizeRequests()
+                    .authorizeRequests().antMatchers(HttpMethod.POST, "/users").permitAll()
+                    .antMatchers(HttpMethod.POST, "/login").permitAll()
+                    .antMatchers(HttpMethod.GET, "/books/**","/books").permitAll()
                     .anyRequest()
                     .authenticated();
         }
@@ -60,13 +65,16 @@ public class OAuth2ServerConfiguration {
             this.passwordEncoder = passwordEncoder;
             this.authenticationManager = authenticationManager;
         }
-
+        @Bean
+        public TokenStore tokenStore() {
+            return new JwtTokenStore(jwtAccessTokenConverter);
+        }
         @Override
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
             endpoints
-                    .tokenStore(new JwtTokenStore(jwtAccessTokenConverter))
+                    .tokenStore(tokenStore())
                     .authenticationManager(authenticationManager)
-                    .accessTokenConverter(jwtAccessTokenConverter);
+                    .accessTokenConverter(jwtAccessTokenConverter).pathMapping("/oauth/token","/login");
         }
 
         @Override

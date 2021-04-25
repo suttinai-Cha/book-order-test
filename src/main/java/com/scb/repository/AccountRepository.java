@@ -1,6 +1,6 @@
-package com.zeldan.repository;
+package com.scb.repository;
 
-import com.zeldan.model.Account;
+import com.scb.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

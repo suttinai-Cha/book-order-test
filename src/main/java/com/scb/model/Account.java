@@ -1,6 +1,7 @@
-package com.zeldan.model;
+package com.scb.model;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -15,8 +16,23 @@ public class Account {
 
     private String password;
 
+    @Column(name = "birth_date")
+    @Temporal(TemporalType.DATE)
+    private java.util.Date birthDate;
+
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Role> roles;
+
+    @OneToMany (cascade=CascadeType.REMOVE,mappedBy="account",fetch = FetchType.LAZY)
+    private Set<Orders> order;
+
+    public Set<Orders> getOrder() {
+        return order;
+    }
+
+    public void setOrder(Set<Orders> order) {
+        this.order = order;
+    }
 
     private boolean enabled = true;
 
@@ -26,6 +42,14 @@ public class Account {
 
     public Long getId() {
         return id;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     public void setId(Long id) {
